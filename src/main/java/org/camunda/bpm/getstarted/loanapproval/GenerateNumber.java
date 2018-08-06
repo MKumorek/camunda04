@@ -8,6 +8,7 @@ import java.util.Random;
 public class GenerateNumber implements JavaDelegate {
 
     Random rand = new Random();
+    int counter;
 
     public void execute(DelegateExecution delegateExecution) throws Exception {
 
@@ -16,6 +17,7 @@ public class GenerateNumber implements JavaDelegate {
         delegateExecution.setVariable("isEven", isEven(number));
         System.out.println("my number is: " + number);
         System.out.println(delegateExecution.getVariables());
+        System.out.println(++counter);
 
     }
 

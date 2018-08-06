@@ -11,20 +11,16 @@
     <bpmn2:sequenceFlow id="SequenceFlow_0oy9c54" sourceRef="Task_0dfv74n" targetRef="ExclusiveGateway_0j73atl" />
     <bpmn2:serviceTask id="Task_0dfv74n" name="generate number" camunda:class="org.camunda.bpm.getstarted.loanapproval.GenerateNumber">
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_0nm6xo6</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_0oy9c54</bpmn2:outgoing>
     </bpmn2:serviceTask>
-    <bpmn2:exclusiveGateway id="ExclusiveGateway_0j73atl" name="even?">
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_0j73atl" name="even?" default="SequenceFlow_13o9p8v">
       <bpmn2:incoming>SequenceFlow_0oy9c54</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_13o9p8v</bpmn2:outgoing>
       <bpmn2:outgoing>SequenceFlow_0nm6xo6</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
-    <bpmn2:sequenceFlow id="SequenceFlow_13o9p8v" name="yes" sourceRef="ExclusiveGateway_0j73atl" targetRef="EndEvent_1">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">#{isEven}</bpmn2:conditionExpression>
-    </bpmn2:sequenceFlow>
-    <bpmn2:endEvent id="EndEvent_0nmu0qz" name="odd number processed">
-      <bpmn2:incoming>SequenceFlow_0nm6xo6</bpmn2:incoming>
-    </bpmn2:endEvent>
-    <bpmn2:sequenceFlow id="SequenceFlow_0nm6xo6" name="no" sourceRef="ExclusiveGateway_0j73atl" targetRef="EndEvent_0nmu0qz">
+    <bpmn2:sequenceFlow id="SequenceFlow_13o9p8v" name="yes" sourceRef="ExclusiveGateway_0j73atl" targetRef="EndEvent_1" />
+    <bpmn2:sequenceFlow id="SequenceFlow_0nm6xo6" name="no" sourceRef="ExclusiveGateway_0j73atl" targetRef="Task_0dfv74n">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">#{not isEven}</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
   </bpmn2:process>
@@ -72,16 +68,11 @@
           <dc:Bounds x="796" y="161" width="17" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="EndEvent_0nmu0qz_di" bpmnElement="EndEvent_0nmu0qz">
-        <dc:Bounds x="959" y="50" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="947" y="93" width="61" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0nm6xo6_di" bpmnElement="SequenceFlow_0nm6xo6">
         <di:waypoint x="737" y="157" />
         <di:waypoint x="737" y="68" />
-        <di:waypoint x="959" y="68" />
+        <di:waypoint x="508" y="68" />
+        <di:waypoint x="508" y="142" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="746" y="110" width="13" height="14" />
         </bpmndi:BPMNLabel>
