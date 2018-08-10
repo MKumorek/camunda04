@@ -23,6 +23,6 @@ public class WebappExampleProcessApplication {
 	private void processPostDeploy(PostDeployEvent event) {
 //		runtimeService.startProcessInstanceByKey("loanApproval");
 
-//		runtimeService.startProcessInstanceByKey("numbers");
+		runtimeService.startProcessInstanceByKey("numbers_bound");
 	}
 }
