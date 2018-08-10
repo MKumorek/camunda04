@@ -3,6 +3,7 @@ package org.camunda.bpm.getstarted.loanapproval;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 
+import java.util.Date;
 import java.util.Random;
 
 public class GenerateNumber implements JavaDelegate {
@@ -12,10 +13,13 @@ public class GenerateNumber implements JavaDelegate {
 
     public void execute(DelegateExecution delegateExecution) throws Exception {
 
-        int number = rand.nextInt(100);
+        Integer number = (Integer) delegateExecution.getVariable("start");
+        if (number == null){
+            number = rand.nextInt(100);
+        }
         delegateExecution.setVariable("number", number);
         delegateExecution.setVariable("isEven", isEven(number));
-        System.out.println("my number is: " + number);
+        System.out.println(new Date() + "my number is: " + number);
         System.out.println(delegateExecution.getVariables());
         System.out.println(++counter);
 
