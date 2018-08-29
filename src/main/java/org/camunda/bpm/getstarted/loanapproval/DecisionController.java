@@ -26,11 +26,12 @@ public class DecisionController {
     @RequestMapping("/load/{fileName}")
     public void hello(@PathVariable("fileName") String fileName) throws FileNotFoundException {
 
-        InputStream stream = new FileInputStream("C:/dev/" + fileName);
+        InputStream stream = new FileInputStream("src/main/dmns/" + fileName);
 
         repositoryService
                 .createDeployment()
                 .addInputStream(fileName, stream)
+//                .addClasspathResource(fileName)
                 .deploy();
     }
 
