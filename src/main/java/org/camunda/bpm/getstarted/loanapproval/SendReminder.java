@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class SendReminder implements JavaDelegate {
 
-    public void execute(DelegateExecution delegateExecution) throws Exception {
+    public void execute(DelegateExecution delegateExecution) {
 
         System.out.println(new Date() +  "We kindly remind about the task of accepting non-low, non-even number");
         System.out.println(delegateExecution.getVariables());

@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class SendInformation implements JavaDelegate {
 
-    public void execute(DelegateExecution delegateExecution) throws Exception {
+    public void execute(DelegateExecution delegateExecution) {
 
         System.out.println(new Date() + "You didn't process the number, so let's finish");
         System.out.println(delegateExecution.getVariables());

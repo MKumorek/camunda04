@@ -5,3 +5,8 @@ camunda.bpm:
     firstName: Kermit
   filter:
     create: All tasks
+
+spring:
+  h2:
+    console:
+      enabled: true
