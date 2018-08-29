@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" id="Definitions_0vrg3yr" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="checkIfLow" name="Decision 1">
+    <extensionElements>
+      <biodi:bounds x="150" y="150" width="180" height="80" />
+    </extensionElements>
+    <decisionTable id="decisionTable_1" hitPolicy="FIRST">
+      <input id="input_1">
+        <inputExpression id="inputExpression_1" typeRef="integer">
+          <text>number</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" name="low" typeRef="boolean" />
+      <rule id="DecisionRule_1jmt2vg">
+        <inputEntry id="UnaryTests_1bgu05y">
+          <text>0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0k80y2v">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1tss5xp">
+        <inputEntry id="UnaryTests_03zwwqo">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_096rl93">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

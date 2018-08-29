@@ -14,7 +14,7 @@ public class GenerateNumber implements JavaDelegate {
     public void execute(DelegateExecution delegateExecution) throws Exception {
 
         Integer number = (Integer) delegateExecution.getVariable("start");
-        if (number ==  null){
+        if (number == null){
             number = rand.nextInt(100);
         }
         delegateExecution.setVariable("number", number);
