@@ -31,7 +31,6 @@ public class DecisionController {
         repositoryService
                 .createDeployment()
                 .addInputStream(drgFileName, drgStream)
-//                .addClasspathResource(drgFileName)
                 .deploy();
     }
 
@@ -50,15 +49,6 @@ public class DecisionController {
                 .evaluate()
                 .getFirstResult()
                 .getEntryMap();
-
-//        DecisionEvaluationBuilder check = decisionService.evaluateDecisionTableByKey(decision);
-//
-//        check.variables(Collections.<String, Object>singletonMap("temperature", temp));
-//
-//        Map<String, Object> entryMap = check
-//                .evaluate()
-//                .getFirstResult()
-//                .getEntryMap();
 
         return "result: " + entryMap;
     }
