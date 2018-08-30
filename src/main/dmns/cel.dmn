@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" id="Definitions_1hpf5wz" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
-  <decision id="D1" name="D1">
+  <decision id="CEL" name="CEL">
     <extensionElements>
-      <biodi:bounds x="616" y="200" width="180" height="80" />
-      <biodi:edge source="D3">
-        <biodi:waypoints x="611" y="356" />
-        <biodi:waypoints x="706" y="280" />
+      <biodi:bounds x="652" y="310" width="180" height="80" />
+      <biodi:edge source="SUB">
+        <biodi:waypoints x="661" y="457" />
+        <biodi:waypoints x="713" y="390" />
       </biodi:edge>
     </extensionElements>
     <informationRequirement>
-      <requiredDecision href="#D3" />
+      <requiredDecision href="#SUB" />
     </informationRequirement>
     <decisionTable id="decisionTable_1">
       <input id="input_1">
@@ -23,7 +23,7 @@
           <text>true</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1ajfx5l">
-          <text>water</text>
+          <text>"water"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_1xbuoaf">
@@ -31,21 +31,21 @@
           <text>false</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_01ar5is">
-          <text>ice</text>
+          <text>"ice"</text>
         </outputEntry>
       </rule>
     </decisionTable>
   </decision>
-  <decision id="D3" name="D3">
+  <decision id="SUB" name="SUB">
     <extensionElements>
-      <biodi:bounds x="507" y="356" width="180" height="80" />
-      <biodi:edge source="D1">
+      <biodi:bounds x="539" y="457" width="180" height="80" />
+      <biodi:edge source="CEL">
         <biodi:waypoints x="706" y="280" />
         <biodi:waypoints x="597" y="356" />
       </biodi:edge>
       <biodi:edge source="InputData_1d6lqv6">
-        <biodi:waypoints x="479" y="484" />
-        <biodi:waypoints x="543" y="436" />
+        <biodi:waypoints x="533" y="580" />
+        <biodi:waypoints x="568" y="537" />
       </biodi:edge>
     </extensionElements>
     <informationRequirement>
@@ -78,7 +78,7 @@
   </decision>
   <inputData id="InputData_1d6lqv6" name="temperature">
     <extensionElements>
-      <biodi:bounds x="391" y="484" width="125" height="45" />
+      <biodi:bounds x="438" y="580" width="125" height="45" />
     </extensionElements>
   </inputData>
 </definitions>
