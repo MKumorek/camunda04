@@ -14,7 +14,44 @@ import static org.junit.Assert.assertEquals;
 public class VersioningTest {
 
     @Test
-    public void testSubdecision() {
+    public void testDecisionCel() {
+        RestAssured.registerParser("text/plain", Parser.JSON);
+        RestAssured.defaultParser = Parser.JSON;
+
+        given().get("load/cel.dmn");
+
+        String response = when("run/CEL/10");
+
+        assertEquals("result: {form=water}", response);
+    }
+
+    @Test
+    public void testDecisionFar() {
+        RestAssured.registerParser("text/plain", Parser.JSON);
+        RestAssured.defaultParser = Parser.JSON;
+
+        given().get("load/far.dmn");
+
+        String response = when("run/FAR/10");
+
+        assertEquals("result: {form=ice}", response);
+    }
+
+    @Test
+    public void testSubdecisionCel() {
+        RestAssured.registerParser("text/plain", Parser.JSON);
+        RestAssured.defaultParser = Parser.JSON;
+
+        given().get("load/cel.dmn");
+
+        String response = when("run/SUB/10");
+
+        assertEquals("result: {warm=true}", response);
+
+    }
+
+    @Test
+    public void testSubdecisionFar() {
         RestAssured.registerParser("text/plain", Parser.JSON);
         RestAssured.defaultParser = Parser.JSON;
 
@@ -24,18 +61,6 @@ public class VersioningTest {
 
         assertEquals("result: {warm=false}", response);
 
-    }
-
-    @Test
-    public void testDecision() {
-        RestAssured.registerParser("text/plain", Parser.JSON);
-        RestAssured.defaultParser = Parser.JSON;
-
-        given().get("load/far.dmn");
-
-        String response = when("run/FAR/10");
-
-        assertEquals("result: {form=ice}", response);
     }
 
     @Test
