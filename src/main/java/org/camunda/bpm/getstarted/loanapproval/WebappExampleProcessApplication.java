@@ -1,8 +1,6 @@
 package org.camunda.bpm.getstarted.loanapproval;
 
 import org.camunda.bpm.engine.DecisionService;
-import org.camunda.bpm.engine.RepositoryService;
-import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.dmn.DecisionEvaluationBuilder;
 import org.camunda.bpm.spring.boot.starter.annotation.EnableProcessApplication;
 import org.camunda.bpm.spring.boot.starter.event.PostDeployEvent;
@@ -11,11 +9,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.event.EventListener;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
+import java.util.Collections;
 import java.util.Map;
-
-import static java.util.Collections.singletonMap;
 
 @SpringBootApplication
 @EnableProcessApplication
@@ -39,7 +34,7 @@ public class WebappExampleProcessApplication {
 		DecisionEvaluationBuilder checkIfLow = decisionService.evaluateDecisionTableByKey("checkIfLow");
 
 		checkIfLow
-				.variables(singletonMap("number", 13));
+				.variables(Collections.<String, Object>singletonMap("number", 13));
 
 		Map<String, Object> entryMap = checkIfLow
 				.evaluate()

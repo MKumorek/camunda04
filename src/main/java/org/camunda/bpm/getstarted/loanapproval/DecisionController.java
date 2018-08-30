@@ -3,16 +3,16 @@ package org.camunda.bpm.getstarted.loanapproval;
 import org.camunda.bpm.engine.DecisionService;
 import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.dmn.DecisionEvaluationBuilder;
-import org.camunda.bpm.engine.repository.Deployment;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
-
-import static java.util.Collections.singletonMap;
 
 @RestController
 public class DecisionController {
@@ -23,15 +23,15 @@ public class DecisionController {
     @Autowired
     private DecisionService decisionService;
 
-    @RequestMapping("/load/{fileName}")
-    public void hello(@PathVariable("fileName") String fileName) throws FileNotFoundException {
+    @RequestMapping("/load/{drgFileName}")
+    public void hello(@PathVariable("drgFileName") String drgFileName) throws FileNotFoundException {
 
-        InputStream stream = new FileInputStream("src/main/dmns/" + fileName);
+        InputStream drgStream = new FileInputStream("src/main/dmns/" + drgFileName);
 
         repositoryService
                 .createDeployment()
-                .addInputStream(fileName, stream)
-//                .addClasspathResource(fileName)
+                .addInputStream(drgFileName, drgStream)
+//                .addClasspathResource(drgFileName)
                 .deploy();
     }
 
@@ -40,12 +40,25 @@ public class DecisionController {
 
         DecisionEvaluationBuilder check = decisionService.evaluateDecisionTableByKey(decision);
 
-        check.variables(singletonMap("temperature", temp));
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("temperature", temp);
+
+
+        check.variables(map);
 
         Map<String, Object> entryMap = check
                 .evaluate()
                 .getFirstResult()
                 .getEntryMap();
+
+//        DecisionEvaluationBuilder check = decisionService.evaluateDecisionTableByKey(decision);
+//
+//        check.variables(Collections.<String, Object>singletonMap("temperature", temp));
+//
+//        Map<String, Object> entryMap = check
+//                .evaluate()
+//                .getFirstResult()
+//                .getEntryMap();
 
         return "result: " + entryMap;
     }
