@@ -31,6 +31,7 @@ public class DecisionController {
         repositoryService
                 .createDeployment()
                 .addInputStream(drgFileName, drgStream)
+//                .addClasspathResource(drgFileName)
                 .deploy();
     }
 
