@@ -1,86 +1,80 @@
 package org.camunda.bpm.getstarted.loanapproval;
 
-
-import io.restassured.RestAssured;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.BlockJUnit4ClassRunner;
-
-import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
 
-@RunWith(BlockJUnit4ClassRunner.class)
-public class VersioningTest {
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.test.context.junit4.SpringRunner;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+public class VersioningTest {
+    
+    @Autowired
+    private TestRestTemplate restTemplate;
+    
     @Test
     public void testDecisionCel() {
-        given().get("load/cel.dmn");
-
-        String response = when("run/CEL/10");
-
+        this.restTemplate.getForObject("/load/cel.dmn", String.class);
+        
+        String response = this.restTemplate.getForObject("/run/CEL/10", String.class);
+        
         assertEquals("result: {form=water}", response);
     }
-
+    
     @Test
     public void testDecisionFar() {
-        given().get("load/far.dmn");
-
-        String response = when("run/FAR/10");
-
+        this.restTemplate.getForObject("/load/far.dmn", String.class);
+        
+        String response = this.restTemplate.getForObject("/run/FAR/10", String.class);
+        
         assertEquals("result: {form=ice}", response);
     }
-
+    
     @Test
     public void testSubdecisionCel() {
-        given().get("load/cel.dmn");
-
-        String response = when("run/SUB/10");
-
+        this.restTemplate.getForObject("/load/cel.dmn", String.class);
+        
+        String response = this.restTemplate.getForObject("/run/SUB/10", String.class);
+        
         assertEquals("result: {warm=true}", response);
-
+        
     }
-
+    
     @Test
     public void testSubdecisionFar() {
-        given().get("load/far.dmn");
-
-        String response = when("run/SUB/10");
-
+        this.restTemplate.getForObject("/load/far.dmn", String.class);
+        
+        String response = this.restTemplate.getForObject("/run/SUB/10", String.class);
+        
         assertEquals("result: {warm=false}", response);
-
+        
     }
-
+    
     @Test
-    public void testIndependency() {
-        given().get("load/far.dmn");
-        given().get("load/cel.dmn");
-
-        String response = when("run/CEL/-1");
+    public void testIndependence() {
+        this.restTemplate.getForObject("/load/far.dmn", String.class);
+        this.restTemplate.getForObject("/load/cel.dmn", String.class);
+        
+        String response = this.restTemplate.getForObject("/run/CEL/-1", String.class);
         assertEquals("result: {form=ice}", response);
-
-        response = when("run/CEL/1");
+        
+        response = this.restTemplate.getForObject("/run/CEL/1", String.class);
         assertEquals("result: {form=water}", response);
-
-        response = when("run/FAR/-1");
+        
+        response = this.restTemplate.getForObject("/run/FAR/-1", String.class);
         assertEquals("result: {form=ice}", response);
-
-        response = when("run/FAR/1");
+        
+        response = this.restTemplate.getForObject("/run/FAR/1", String.class);
         assertEquals("result: {form=ice}", response);
-
-        response = when("run/SUB/1");
+        
+        response = this.restTemplate.getForObject("/run/SUB/1", String.class);
         assertEquals("result: {warm=true}", response);
-
+        
     }
-
-    private String when(String request){
-        return RestAssured
-                .when()
-                .get(request)
-                .then()
-                .statusCode(200)
-                .extract()
-                .response()
-                .print();
-    }
-
+    
 }
