@@ -25,20 +25,11 @@ public class DecisionController {
     @Autowired
     private DecisionService decisionService;
     
-    // @Autowired
-    // private ResourceLoader resourceLoader;
-    
     @RequestMapping("/load/{drgFileName}")
     public String load(@PathVariable("drgFileName") String drgFileName) throws IOException {
         
-        // String resourcePath = "classpath:dmns/" + drgFileName;
-        // InputStream drgStream = resourceLoader.getResource(resourcePath).getInputStream();
-        //
-        // InputStream drgStream = new FileInputStream("src/main/dmns/" + drgFileName);
-        
         Deployment deploy = repositoryService
                 .createDeployment()
-                // .addInputStream(drgFileName, drgStream)
                 .addClasspathResource("dmns/" + drgFileName)
                 .deploy();
         
