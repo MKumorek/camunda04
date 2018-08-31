@@ -2,7 +2,6 @@ package org.camunda.bpm.getstarted.loanapproval;
 
 
 import io.restassured.RestAssured;
-import io.restassured.parsing.Parser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
@@ -14,10 +13,35 @@ import static org.junit.Assert.assertEquals;
 public class VersioningTest {
 
     @Test
-    public void testSubdecision() {
-        RestAssured.registerParser("text/plain", Parser.JSON);
-        RestAssured.defaultParser = Parser.JSON;
+    public void testDecisionCel() {
+        given().get("load/cel.dmn");
 
+        String response = when("run/CEL/10");
+
+        assertEquals("result: {form=water}", response);
+    }
+
+    @Test
+    public void testDecisionFar() {
+        given().get("load/far.dmn");
+
+        String response = when("run/FAR/10");
+
+        assertEquals("result: {form=ice}", response);
+    }
+
+    @Test
+    public void testSubdecisionCel() {
+        given().get("load/cel.dmn");
+
+        String response = when("run/SUB/10");
+
+        assertEquals("result: {warm=true}", response);
+
+    }
+
+    @Test
+    public void testSubdecisionFar() {
         given().get("load/far.dmn");
 
         String response = when("run/SUB/10");
@@ -27,22 +51,7 @@ public class VersioningTest {
     }
 
     @Test
-    public void testDecision() {
-        RestAssured.registerParser("text/plain", Parser.JSON);
-        RestAssured.defaultParser = Parser.JSON;
-
-        given().get("load/far.dmn");
-
-        String response = when("run/FAR/10");
-
-        assertEquals("result: {form=ice}", response);
-    }
-
-    @Test
     public void testIndependency() {
-        RestAssured.registerParser("text/plain", Parser.JSON);
-        RestAssured.defaultParser = Parser.JSON;
-
         given().get("load/far.dmn");
         given().get("load/cel.dmn");
 
