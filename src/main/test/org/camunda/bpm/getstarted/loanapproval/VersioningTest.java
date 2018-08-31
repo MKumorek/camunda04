@@ -23,7 +23,7 @@ public class VersioningTest {
         
         String response = this.restTemplate.getForObject("/run/CEL/10", String.class);
         
-        assertEquals("result: {form=water}", response);
+        assertEquals("{form=water}", response);
     }
     
     @Test
@@ -32,7 +32,7 @@ public class VersioningTest {
         
         String response = this.restTemplate.getForObject("/run/FAR/10", String.class);
         
-        assertEquals("result: {form=ice}", response);
+        assertEquals("{form=ice}", response);
     }
     
     @Test
@@ -41,7 +41,7 @@ public class VersioningTest {
         
         String response = this.restTemplate.getForObject("/run/SUB/10", String.class);
         
-        assertEquals("result: {warm=true}", response);
+        assertEquals("{warm=true}", response);
         
     }
     
@@ -51,7 +51,7 @@ public class VersioningTest {
         
         String response = this.restTemplate.getForObject("/run/SUB/10", String.class);
         
-        assertEquals("result: {warm=false}", response);
+        assertEquals("{warm=false}", response);
         
     }
     
@@ -61,19 +61,19 @@ public class VersioningTest {
         this.restTemplate.getForObject("/load/cel.dmn", String.class);
         
         String response = this.restTemplate.getForObject("/run/CEL/-1", String.class);
-        assertEquals("result: {form=ice}", response);
+        assertEquals("{form=ice}", response);
         
         response = this.restTemplate.getForObject("/run/CEL/1", String.class);
-        assertEquals("result: {form=water}", response);
+        assertEquals("{form=water}", response);
         
         response = this.restTemplate.getForObject("/run/FAR/-1", String.class);
-        assertEquals("result: {form=ice}", response);
+        assertEquals("{form=ice}", response);
         
         response = this.restTemplate.getForObject("/run/FAR/1", String.class);
-        assertEquals("result: {form=ice}", response);
+        assertEquals("{form=ice}", response);
         
         response = this.restTemplate.getForObject("/run/SUB/1", String.class);
-        assertEquals("result: {warm=true}", response);
+        assertEquals("{warm=true}", response);
         
     }
     

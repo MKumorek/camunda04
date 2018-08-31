@@ -22,10 +22,10 @@ public class VersioningByDeploymentTest {
         this.restTemplate.getForObject("/load/cel.dmn", String.class);
 
         String response = this.restTemplate.getForObject("/run/CEL/-1", String.class);
-        assertEquals("result: {form=ice}", response);
+        assertEquals("{form=ice}", response);
 
         response = this.restTemplate.getForObject("/run/CEL/1", String.class);
-        assertEquals("result: {form=water}", response);
+        assertEquals("{form=water}", response);
     }
     
     @Test
@@ -33,32 +33,29 @@ public class VersioningByDeploymentTest {
         this.restTemplate.getForObject("/load/celTreshold10.dmn", String.class);
         
         String response = this.restTemplate.getForObject("/run/CEL/9", String.class);
-        assertEquals("result: {form=ice}", response);
+        assertEquals("{form=ice}", response);
 
         response = this.restTemplate.getForObject("/run/CEL/11", String.class);
-        assertEquals("result: {form=water}", response);
+        assertEquals("{form=water}", response);
     }
 
-//    @Test
-//    public void testIndependence() {
-//        String forObject = this.restTemplate.getForObject("/load/celTreshold10.dmn", String.class);
-//        this.restTemplate.getForObject("/load/cel.dmn", String.class);
-//
-//        String response = this.restTemplate.getForObject("/runByVersion/CEL/-1", String.class);
-//        assertEquals("result: {form=ice}", response);
-//
-//        response = this.restTemplate.getForObject("/run/CEL/1", String.class);
-//        assertEquals("result: {form=water}", response);
-//
-//        response = this.restTemplate.getForObject("/run/FAR/-1", String.class);
-//        assertEquals("result: {form=ice}", response);
-//
-//        response = this.restTemplate.getForObject("/run/FAR/1", String.class);
-//        assertEquals("result: {form=ice}", response);
-//
-//        response = this.restTemplate.getForObject("/run/SUB/1", String.class);
-//        assertEquals("result: {warm=true}", response);
-//
-//    }
+    @Test
+    public void testIndependence() {
+        String vCel = this.restTemplate.getForObject("/load/cel.dmn", String.class);
+        String vCel10 = this.restTemplate.getForObject("/load/celTreshold10.dmn", String.class);
+
+        String response = this.restTemplate.getForObject("/run/CEL/" + vCel + "/-1", String.class);
+        assertEquals("{form=ice}", response);
+
+        response = this.restTemplate.getForObject("/run/CEL/" + vCel + "/1", String.class);
+        assertEquals("{form=water}", response);
+
+        response = this.restTemplate.getForObject("/run/CEL/" + vCel10 + "/9", String.class);
+        assertEquals("{form=ice}", response);
+
+        response = this.restTemplate.getForObject("/run/CEL/" + vCel10 + "/11", String.class);
+        assertEquals("{form=water}", response);
+
+    }
     
 }

@@ -32,36 +32,71 @@ public class DecisionController {
     private ResourceLoader resourceLoader;
     
     @RequestMapping("/load/{drgFileName}")
-    public void load(@PathVariable("drgFileName") String drgFileName) throws IOException {
+    public String load(@PathVariable("drgFileName") String drgFileName) throws IOException {
         
 //        String resourcePath = "classpath:dmns/" + drgFileName;
 //        InputStream drgStream = resourceLoader.getResource(resourcePath).getInputStream();
 //
         InputStream drgStream = new FileInputStream("src/main/dmns/" + drgFileName);
 
-        repositoryService
+        Deployment deploy = repositoryService
                 .createDeployment()
                 .addInputStream(drgFileName, drgStream)
 //                .addClasspathResource(drgFileName)
                 .deploy();
+
+        return extractVersion((DeploymentEntity) deploy);
     }
 
+
     @RequestMapping("/run/{decision}/{temp}")
-    public String run(@PathVariable("decision") String decision, @PathVariable("temp") String temp) {
-        
-        DecisionEvaluationBuilder check = decisionService.evaluateDecisionTableByKey(decision);
-        
-        HashMap<String, Object> map = new HashMap<String, Object>();
+    public String run(@PathVariable("decision") String decision,
+                      @PathVariable("temp") String temp) {
+
+        return evaluate(decision, temp).toString();
+    }
+
+    @RequestMapping("/run/{decision}/{version}/{temp}")
+    public String run(@PathVariable("decision") String decision,
+                      @PathVariable("version") int version,
+                      @PathVariable("temp") String temp) {
+
+        return evaluate(decision, temp, version).toString();
+    }
+
+    private String extractVersion(DeploymentEntity deploy) {
+
+        List<DecisionDefinitionEntity> dde = deploy
+                .getDeployedArtifacts()
+                .get(DecisionDefinitionEntity.class);
+        return Integer.toString(dde.stream()
+                .filter(d -> !d.getKey().equals("SUB") )
+                .findFirst()
+                .get()
+                .getVersion());
+    }
+
+    private Map<String, Object> evaluate(String decision, String temp) {
+        return evaluate(decision, temp, null);
+    }
+
+    private Map<String, Object> evaluate(String decision,
+                                         String temp,
+                                         Integer version) {
+
+        DecisionEvaluationBuilder check = decisionService
+                .evaluateDecisionTableByKey(decision)
+                .version(version);
+
+        HashMap<String, Object> map = new HashMap<>();
         map.put("temperature", temp);
-        
+
         check.variables(map);
-        
-        Map<String, Object> entryMap = check
+
+        return check
                 .evaluate()
                 .getFirstResult()
                 .getEntryMap();
-        
-        return "result: " + entryMap;
     }
-    
+
 }
