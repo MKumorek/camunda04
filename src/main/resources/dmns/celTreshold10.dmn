@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" id="Definitions_1hpf5wz" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="CEL" name="CEL">
+    <extensionElements>
+      <biodi:bounds x="652" y="310" width="180" height="80" />
+      <biodi:edge source="SUB">
+        <biodi:waypoints x="661" y="457" />
+        <biodi:waypoints x="713" y="390" />
+      </biodi:edge>
+    </extensionElements>
+    <informationRequirement>
+      <requiredDecision href="#SUB" />
+    </informationRequirement>
+    <decisionTable id="decisionTable_1">
+      <input id="input_1">
+        <inputExpression id="inputExpression_1" typeRef="boolean">
+          <text>warm</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" name="form" typeRef="string" />
+      <rule id="DecisionRule_0v69qj9">
+        <inputEntry id="UnaryTests_0p1gi19">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ajfx5l">
+          <text>"water"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1xbuoaf">
+        <inputEntry id="UnaryTests_03a4w5v">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_01ar5is">
+          <text>"ice"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="SUB" name="SUB">
+    <extensionElements>
+      <biodi:bounds x="539" y="457" width="180" height="80" />
+      <biodi:edge source="CEL">
+        <biodi:waypoints x="706" y="280" />
+        <biodi:waypoints x="597" y="356" />
+      </biodi:edge>
+      <biodi:edge source="InputData_1d6lqv6">
+        <biodi:waypoints x="533" y="580" />
+        <biodi:waypoints x="568" y="537" />
+      </biodi:edge>
+    </extensionElements>
+    <informationRequirement>
+      <requiredInput href="#InputData_1d6lqv6" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_17n78h8">
+      <input id="InputClause_0sj1lr9">
+        <inputExpression id="LiteralExpression_13smmev" typeRef="integer">
+          <text>temperature</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0jgjrqe" name="warm" typeRef="boolean" />
+      <rule id="DecisionRule_10vro5h">
+        <inputEntry id="UnaryTests_0j6mwxc">
+          <text>&gt;= 10</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0a1fq27">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_09mzgek">
+        <inputEntry id="UnaryTests_0tym4wq">
+          <text>&lt; 10</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0kyi9ge">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_1d6lqv6" name="temperature">
+    <extensionElements>
+      <biodi:bounds x="438" y="580" width="125" height="45" />
+    </extensionElements>
+  </inputData>
+</definitions>
