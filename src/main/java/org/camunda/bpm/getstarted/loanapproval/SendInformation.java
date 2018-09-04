@@ -14,8 +14,4 @@ public class SendInformation implements JavaDelegate {
 
     }
 
-    private boolean isEven(int number) {
-        return 0 == number % 2;
-    }
-
 }
