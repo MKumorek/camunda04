@@ -16,18 +16,35 @@
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-dependencies</artifactId>
-				<version>2.0.4.RELEASE</version>
+				<version>1.5.15.RELEASE</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+
+            <!-- Camunda dependencies -->
+            <dependency>
+                <groupId>org.camunda.bpm</groupId>
+                <artifactId>camunda-bom</artifactId>
+                <version>7.7.0-wts-SNAPSHOT</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <!-- Overriding spin plugin to avoid jsonpath dependency conflict with
+            sapring tests -->
+            <dependency>
+                <groupId>org.camunda.spin</groupId>
+                <artifactId>camunda-spin-dataformat-json-jackson</artifactId>
+                <version>1.4.0</version>
+            </dependency>
+
 		</dependencies>
 	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.camunda.bpm.springboot</groupId>
+			<groupId>org.camunda.bpm.extension.springboot</groupId>
 			<artifactId>camunda-bpm-spring-boot-starter-webapp</artifactId>
-			<version>3.0.0</version>
+			<version>2.2.0</version>
 		</dependency>
 
 		<dependency>
@@ -36,14 +53,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
+			<version>3.0.7</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -53,12 +65,6 @@
 			<scope>test</scope>
 		</dependency>
 
-        <dependency>
-            <groupId>org.camunda.bpm.springboot</groupId>
-            <artifactId>camunda-bpm-spring-boot-starter-rest</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-
 	</dependencies>
 
 	<build>
@@ -66,7 +72,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>2.0.4.RELEASE</version>
+				<version>1.5.15.RELEASE</version>
 				<configuration>
 					<layout>ZIP</layout>
 				</configuration>

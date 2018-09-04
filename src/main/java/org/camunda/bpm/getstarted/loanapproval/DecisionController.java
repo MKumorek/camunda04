@@ -27,10 +27,10 @@ public class DecisionController {
     
     @RequestMapping("/load/{drgFileName}")
     public String load(@PathVariable("drgFileName") String drgFileName) throws IOException {
-        
+
         Deployment deploy = repositoryService
                 .createDeployment()
-                .addClasspathResource("dmns/" + drgFileName)
+                .addClasspathResource("dmns/" + drgFileName + ".dmn")
                 .deploy();
         
         return extractVersion((DeploymentEntity) deploy);
